@@ -47,6 +47,7 @@ router.put('/reservations/:id', protect, resaCtrl.update);
 router.put('/reservations/:id/confirm', protect, resaCtrl.confirm);
 router.put('/reservations/:id/refuse', protect, resaCtrl.refuse);
 router.put('/reservations/:id/terminate', protect, resaCtrl.terminate);
+router.put('/reservations/:id/cancel', protect, resaCtrl.cancel);
 router.delete('/reservations/:id', protect, resaCtrl.remove);
 
 

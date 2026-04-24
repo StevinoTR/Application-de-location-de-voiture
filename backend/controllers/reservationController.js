@@ -181,3 +181,32 @@ exports.terminate = async (req, res, next) => {
     res.json({ message: 'Réservation terminée, voiture remise disponible', reservation: resa });
   } catch (err) { next(err); }
 };
+
+exports.cancel = async (req, res, next) => {
+  try {
+    const resa = await Reservation.findByPk(req.params.id, { include: [{ association: 'voiture' }] });
+    if (!resa) return res.status(404).json({ message: 'Réservation introuvable' });
+
+    // Seul le client qui a fait la réservation (ou un admin) peut l'annuler
+    if (req.user.role === 'client') {
+      if (resa.clientId !== req.user.id) return res.status(403).json({ message: 'Interdit' });
+    } else if (req.user.role !== 'admin') {
+      return res.status(403).json({ message: 'Interdit' });
+    }
+
+    // On ne peut annuler que si c'est en attente ou confirmée
+    if (resa.statut !== 'en_attente' && resa.statut !== 'confirmee') {
+      return res.status(400).json({ message: 'Impossible d\'annuler cette réservation à ce stade' });
+    }
+
+    // 1. Mark reservation as annulee
+    await resa.update({ statut: 'annulee' });
+
+    // 2. Si la réservation était confirmée (voiture bloquée), remettre la voiture disponible
+    if (resa.statut === 'confirmee' && resa.voiture) {
+      await resa.voiture.update({ statut: 'disponible' });
+    }
+
+    res.json({ message: 'Réservation annulée', reservation: resa });
+  } catch (err) { next(err); }
+};

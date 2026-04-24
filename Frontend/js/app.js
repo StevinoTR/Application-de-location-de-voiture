@@ -152,6 +152,10 @@ const terminateReservation = async (id) => {
   return apiFetch(`/reservations/${id}/terminate`, { method: 'PUT' });
 };
 
+const cancelReservation = async (id) => {
+  return apiFetch(`/reservations/${id}/cancel`, { method: 'PUT' });
+};
+
 // --- USERS & ENTREPRISES ---
 const fetchUsers = async (role) => {
   const qs = new URLSearchParams(role ? { role } : {}).toString();
@@ -166,6 +170,6 @@ const fetchEntreprises = async () => apiFetch('/entreprises');
 export {
   store, login, logout, register,
   fetchVoitures, createVoiture, updateVoiture, removeVoiture, uploadVoiturePhoto,
-  createReservation, fetchMesReservations, fetchReservations, updateReservation, confirmReservation, refuseReservation, terminateReservation,
+  createReservation, fetchMesReservations, fetchReservations, updateReservation, confirmReservation, refuseReservation, terminateReservation, cancelReservation,
   fetchUsers, deleteUser, toggleBlockUser, fetchEntrepriseMe, fetchEntreprises
 };
