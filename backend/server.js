@@ -101,7 +101,12 @@ const start = async () => {
   }
 
   // sync is disabled to prevent crashes due to FK constraints
-  await sequelize.sync({ alter: false });
+  try {
+    await sequelize.sync({ alter: false });
+    console.log('✔ Tables synchronisées avec succès');
+  } catch (e) {
+    console.error('⚠️  Échec de la synchronisation des tables :', e.message);
+  }
 
   const port = process.env.PORT || 5000;
   app.listen(port, () => {
