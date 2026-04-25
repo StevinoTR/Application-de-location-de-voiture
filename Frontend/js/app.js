@@ -1,5 +1,6 @@
 // API Base URL - Dynamically set to the current origin for flexibility
-const API_BASE = window.location.origin;
+// // ✅ CORRECT
+const API_BASE = 'https://application-de-location-de-voiture.onrender.com';
 
 let storedUser = null;
 try {

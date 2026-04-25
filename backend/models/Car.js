@@ -4,19 +4,19 @@ const User = require('./User');
 
 const Car = sequelize.define('Car', {
   id: {
-    type: DataTypes.INTEGER.UNSIGNED,
+    type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true
   },
   marque:    { type: DataTypes.STRING, allowNull: false },
   modele:    { type: DataTypes.STRING, allowNull: false },
-  annee:     { type: DataTypes.SMALLINT.UNSIGNED, allowNull: false },
-  prix_jour: { type: DataTypes.INTEGER.UNSIGNED, allowNull: false },
+  annee:     { type: DataTypes.SMALLINT, allowNull: false },
+  prix_jour: { type: DataTypes.INTEGER, allowNull: false },
   statut:    { type: DataTypes.ENUM('disponible','louee','maintenance'), defaultValue: 'disponible' },
   description: DataTypes.TEXT,
   photoUrl:  DataTypes.STRING,
   // When an entreprise is deleted, we keep the car but clear the foreign key.
-  entrepriseId: { type: DataTypes.INTEGER.UNSIGNED, allowNull: false }
+  entrepriseId: { type: DataTypes.INTEGER, allowNull: false }
 }, {
   tableName: 'voitures',
   timestamps: true

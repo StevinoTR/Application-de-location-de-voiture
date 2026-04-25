@@ -5,16 +5,16 @@ const Car = require('./Car');
 
 const Reservation = sequelize.define('Reservation', {
   id: {
-    type: DataTypes.INTEGER.UNSIGNED,
+    type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true
   },
-  voitureId: { type: DataTypes.INTEGER.UNSIGNED, allowNull: false },
-  clientId:  { type: DataTypes.INTEGER.UNSIGNED, allowNull: false },
+  voitureId: { type: DataTypes.INTEGER, allowNull: false },
+  clientId:  { type: DataTypes.INTEGER, allowNull: false },
   date_debut: { type: DataTypes.DATEONLY, allowNull: false },
   date_fin:   { type: DataTypes.DATEONLY, allowNull: false },
   statut: { type: DataTypes.ENUM('en_attente','confirmee','annulee','terminee'), defaultValue: 'en_attente' },
-  montant:  DataTypes.INTEGER.UNSIGNED,
+  montant:  DataTypes.INTEGER,
   reference:{ type: DataTypes.STRING, unique: true }
 }, {
   tableName: 'reservations',
